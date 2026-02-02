@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    {% include 'nav.html' %}
+
+    <div id="contents">
+    <div id="hero-container">
+    <img id="hero-background" src="{{ url_for('static', filename='img/background.png') }}">
+    <div id="hero-body">
+    <h1 id="hero-heading">Hi, I'm <span class="highlight">Luke</span>.</h1>
+    <p id="hero"> A passionate Computer Science graduate from Chichester, England.</p>
+    <!-- <a href="/projects"><button id="my-work-btn" onclick="location.href='#projects-container'">My Projects</button></a> -->
+    <button id="my-work-btn" >My Projects</button>
+    </div>
+    <img id="me-image" src="{{ url_for('static', filename='img/me2.png') }}">
+    </div>
+    <div class="scroll-down"></div>
+    <div id="about-container">
+        <h1 id="about-heading">About Me</h1>
+        <p class="about">
+            I am a Computer Science graduate with a strong passion for software development, machine learning, and data analysis. With hands-on experience in Python, Java, HTML and more,
+            I have successfully built projects ranging from reinforcement learning models to full-stack web applications.
+        </p>
+        <p class="about">
+            Whether it was analysing data to determine the viability of an unorthodox build in a video game or simply debugging some code, I have always found great satisfaction in solving complex problems. With this in mind,
+            it was only natural that I found myself gravitating towards the subject of Computer Science, eventually achieving a degree in the subject from The University of Exeter. 
+        </p>
+        <p class="about"> 
+            Throughout my academic journey, I have demonstrated adaptability, good problem-solving skills, and teamwork, collaborating on projects such as a sustainability-themed web app.
+            For my dissertation, I optimized agent communication using reinforcement learning and PyTorch, showcasing my ability to apply cutting-edge AI techniques.
+        </p>
+        <p class="about">
+            I am eager to bring my technical expertise and analytical skills into a professional setting, where I can continue to learn and make meaningful contributions to solving real world problems.
+        </p>
+    </div>
+    <button id="open-cv-btn">Show CV</button>
+
+    <div class="line"></div>
+
+    <div id="my-cv" style="display: none;">
+         <!-- Modal content -->
+         <div id="my-cv-content">
+             <img class="cv-image" src="{{ url_for('static', filename='img/LBuncle_CV_February-25-1.png') }}">
+             <img class="cv-image" src="{{ url_for('static', filename='img/LBuncle_CV_February-25-2.png') }}">
+             <a href="{{ url_for('static', filename='pdfs/LBuncle_CV_February-25.pdf') }}" download="{{ url_for('static', filename='pdfs/LBuncle_CV_February-25.pdf') }}">
+                <button>Download CV</button>
+            </a>
+            <div class="line"></div>
+         </div>
+    </div>
+    <div id="projects">
+    <h1 id="projects-heading">Projects</h1>
+    <div id="projects-container">
+        <div class="project-container">
+            <img class="project-image" src="{{ url_for('static', filename='img/defensive_midfielders_data_project.png') }}">
+            <div class="project-summary">
+                <h1 class="project-heading">Defensive midfielders analysis</h1>
+                <p class="about">
+                    Data project. Midfielder analysis for defensive midfielder role. Done using python
+                </p>
+                <button id="open-project-details-btn">Details</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <dialog id="project-details" class="project-details">
+        <h1 class="project-heading">Defensive midfielders analysis</h1>
+        <p class="about">
+                    Project details...
+        </p>
+    </dialog>
+    </div>
+    
+    <script>
+        const cv = document.getElementById("my-cv");
+        const btn = document.getElementById("open-cv-btn");
+
+        btn.onclick = function () {
+            if (cv.style.display === "none"){
+                cv.style.display = "block";
+                btn.innerText = "Close CV";
+            } else if (cv.style.display === "block"){
+                cv.style.display = "none";
+                btn.innerText = "Show CV";
+            }
+        };
+
+        document.getElementById('my-work-btn').addEventListener('click', () => { document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });});
+
+        const projectBtn = document.getElementById("open-project-details-btn");
+        const projectDialog = document.getElementById("project-details");
+
+        projectBtn.onclick = function () {
+            projectDialog.showModal()
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target === projectDialog) {
+                projectDialog.close()
+            }
+        };
+
+    </script>
+</body>
+</html>

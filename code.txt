@@ -1,0 +1,38 @@
+// Check if we need to increase acceleration in order to maintain the cruise movement speed
+if ((currentMovementSpeed + (currentAcceleration - fishMovementProperties.WaterFriction * currentMovementSpeed) * Time.deltaTime) < cruisingSpeed
+{
+	// Set the acceleration to the one that will maintain the cruise velocity
+	currentAcceleration = fishMovementProperties.CruisingSpeed * fishMovementProperties.WaterFriction;
+}
+
+currentMovementSpeed += (currentAcceleration - fishMovementProperties.WaterFriction * currentMovementSpeed) * timeDelta;
+currentMovementSpeed = Mathf.Clamp(currentMovementSpeed, fishMovementProperties.CruisingSpeed, fishMovementProperties.MaxSpeed);
+
+==============================================================================================================================================
+
+// Calculate quaternion rotations of the current fish rotation and the rotation towards the target
+Quaternion rotationTowardTarget = Quartonion.LookRotation(targetDirection, Vector3.up);
+Quaternion currentRotation = Quaternion.LookRotation(currentMovementDirection, Vector3.up);
+float angleTowardTarget = Quaternion.Angle(currentRotation, rotationTowardTarget);
+
+//Update the current angular acceleration and velocity. using 50 degrees as an angle threshold for starting to speed up at maximum acceleration
+float currentAngularJerk = currentAngularVelocity <angleTowardTarget ?
+	Mathf.Lerp(0f, fishMovementProperties.AngularJerk, (angleTowardTarget - currentAngularVelocity) / 50f) : 0f;
+float angularDeceleration = currentAngularJerk > 0f ? 0f : fishMovementProperties.AngularDeceleration;
+currentAngularAcceleration = Mathf.Clamp(currentAngularAcceleration + (currentAngularJerk - angularDeceleration) * timeDelta,
+	0f, fishMovementProperties.MaxAngularAcceleration);
+currentAngularVelocity = Mathf.Clamp(currentAngularVelocity + currentAngularAcceleration * timeDelta, 0f, fishMovementProperties.MaxAngularVelocity);
+
+// Calculate new rotation based on the current angular velocity and the direction toward target
+Quarternion newRotation = Quarternion.RotateTowards(currentRotation, rotationTowardTarget, currentAngularVelocity * timeDelta);
+
+
+
+===============================================================================================================================================
+
+MaxAngularVelocity
+angularVelocity
+
+Take the minimum of a MaxAngularVelocity and the difference between current angle and goal angle as current angularVelocity
+
+Think of the angle as a bearing with the goal angle being the bearing of the goal from the fish's position

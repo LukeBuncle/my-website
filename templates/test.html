@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moving & Rotating Image</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+    }
+
+    img {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      transform-origin: center center;
+      transition: transform 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="sprite" src="C:\Users\lurky\Documents\Projects\Unfinished\Website\static\img/fish.png" alt="moving cat">
+
+  <script>
+  const img = document.getElementById('sprite');
+
+  let x0 = 100;
+  let y0= 100;
+  let x = 100;
+  let y = 100;
+  let tail = [100,]
+  let speed = 2;
+  let cruisingSpeed = 1.5;
+  let maxSpeed = 3.5;
+  let acceleration = 2;
+  let waterResistance = 0.2;
+  // Angles in radians
+  let angle = 0;
+  let angularVelocity = 0;
+  let maxAngularVelocity = 0.03;
+  let targetX, targetY;
+
+  newTarget();
+
+  function animate() {
+    if (speed + (acceleration - waterResistance * speed) < cruisingSpeed) {
+	    // Set the acceleration to the one that will maintain the cruise velocity
+	    acceleration = cruisingSpeed * waterResistance;
+    }
+    
+    // Drag
+    speed += (acceleration - waterResistance * speed);
+    speed = clamp(speed, cruisingSpeed, maxSpeed);
+
+    const margin = 100;
+    if (
+      x < -margin || x > window.innerWidth + margin ||
+      y < -margin || y > window.innerHeight + margin
+    ) {
+      newTarget();
+    }
+
+
+    const distanceFromTargetX = targetX - x;
+    const distanceFromTargetY = targetY - y;
+    const dist = Math.sqrt(distanceFromTargetX ** 2 + distanceFromTargetY ** 2);
+
+    
+    // calculate rotation angle
+    const goalAngle = Math.atan2(distanceFromTargetY, distanceFromTargetX);
+
+    let angleDiff = goalAngle - angle;
+    angleDiff = Math.atan2(Math.sin(angleDiff), Math.cos(angleDiff)); // normalize to (-π, π)
+    angularVelocity = clamp(angleDiff, -maxAngularVelocity, maxAngularVelocity);
+    angle += angularVelocity;
+
+    // pick new target if close
+    if (dist < 100) {
+      newTarget();
+      speed = 0.2;
+    } else {
+      // move toward target
+      x += Math.cos(angle) * speed;
+      y += Math.sin(angle) * speed;
+    }
+
+
+
+    // apply transform
+    img.style.transform = `translate(${x}px, ${y}px) rotate(${angle * 180 / Math.PI}deg)`;
+
+    requestAnimationFrame(animate);
+  }
+
+  function newTarget() {
+    const margin = 70;
+    targetX = Math.random() * (window.innerWidth - margin * 2) + margin;
+    targetY = Math.random() * (window.innerHeight - margin * 2) + margin;
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function chainConstraints(leadPoint, followPoint, distanceConstraint) {
+    // Get the current distance between the 2 points
+    let distanceX = followPoint(0) - leadPoint(0);
+    let distanceY = followPoint(1) - leadPoint(1);
+
+    const length = Math.sqrt(distanceX ** 2 + distanceY ** 2);
+
+    // Finds the direction of travel for this point/component
+    componentDirection = Math.atan2(distanceY, distanceX);
+
+    // Avoids  division by 0
+    if (length === 0) return {followPoint};
+
+    // Normalize the distance in the X and Y axis
+    distanceX /= length;
+    distanceY /= length;
+
+    // Returns the new value of the following point and the direction of the component
+    return [followPoint(0) + distanceX * distanceConstraint, followPoint(1) + distanceY * distanceConstraint], componentDirection;
+  }
+
+  function outerPoints(point, componentDirection, radius) {
+    const [x, y] = point;
+
+    const leftAngle  = componentDirection + Math.PI / 2;
+    const rightAngle = componentDirection - Math.PI / 2;
+
+    const leftPoint = [
+      x + Math.cos(leftAngle) * radius,
+      y + Math.sin(leftAngle) * radius
+    ];
+
+    const rightPoint = [
+      x + Math.cos(rightAngle) * radius,
+      y + Math.sin(rightAngle) * radius
+    ];
+
+    return [leftPoint, rightPoint];
+
+  }
+
+
+  animate();
+</script>
+
+
+</body>
+</html>

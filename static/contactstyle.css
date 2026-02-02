@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: whitesmoke;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#contents {
+    margin-top: 6vh;
+    width: 100%;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#contact-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#contact-heading {
+    margin-top: 10vh;
+    border-bottom: 2pt solid #000135;
+    width: fit-content;
+    font-size: 2vh;
+}
