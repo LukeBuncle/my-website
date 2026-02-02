@@ -55,10 +55,11 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 200px;
+    margin-left: 10vw;
     margin-right: auto;
 }
 
 .details {
     margin-right: 2vw;
+    font-size: 1rem;
 }

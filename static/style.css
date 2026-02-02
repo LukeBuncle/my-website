@@ -33,7 +33,7 @@ body {
 #hero-heading {
     width: fit-content;
     font-size: 3rem;
-    margin-bottom: 1vh;
+    margin-bottom: 1vw;
     color: white;
     text-align: left;
     margin-top: 50px;
@@ -99,9 +99,9 @@ body {
 #me-image {
     width: fit-content;
     /* height: 94vh; */
-    margin-right: 20vh;
-    height: 50vh;
-    width: 50vh;
+    margin-right: 10vw;
+    height: 30vw;
+    width: 30vw;
     border-radius: 50%;
     border: 2pt solid white;
     animation: fadeIn 1.5s ease-out;
@@ -125,8 +125,8 @@ body {
 #about-heading {
     border-bottom: 2pt solid #000135;
     width: fit-content;
-    font-size: 2vh;
-    margin-bottom: 1vh;
+    font-size: 2rem;
+    margin-bottom: 1vw;
     color: #000135;
     text-align: center;
     margin-top: 50px;
@@ -139,7 +139,7 @@ body {
     color: #000135;
     width: 30%;
     margin-bottom: 6vh;
-    font-size: 1.3vh
+    font-size: 1.07rem;
 }
 
 #my-cv-content {
@@ -178,7 +178,7 @@ body {
 #projects-container {
     display: flex;
     width: 100%;
-    padding-bottom: 50vh;
+    padding-bottom: 30vw;
     justify-content: center;
     align-items: center;
 }
@@ -186,7 +186,7 @@ body {
 #projects-heading {
     border-bottom: 2pt solid #000135;
     width: fit-content;
-    font-size: 2vh;
+    font-size: 2rem;
     margin-bottom: 1vh;
     margin-top: 10vh;
     color: #000135;
