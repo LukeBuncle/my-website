@@ -2,23 +2,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <div class="navbar">
+    <nav>
+        <div class="name"><p>Luke Buncle</p></div>
+        <div class="links">
+            <div class="item"><a href="/" class="item-text">About</a></div>
+            <div class="item"><a href="/contact" class="item-text">Contact</a></div>
+        </div>
+    </nav>
+    </div>
+    <link rel="stylesheet" type="text/css" href="static/navstyle.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 
 <body>
-    {% include 'nav.html' %}
-
     <div id="contents">
     <div id="hero-container">
-    <img id="hero-background" src="{{ url_for('static', filename='img/background.png') }}">
+    <img id="hero-background" src="static/img/background.png">
     <div id="hero-body">
     <h1 id="hero-heading">Hi, I'm <span class="highlight">Luke</span>.</h1>
     <p id="hero"> A passionate Computer Science graduate from Chichester, England.</p>
     <!-- <a href="/projects"><button id="my-work-btn" onclick="location.href='#projects-container'">My Projects</button></a> -->
     <button id="my-work-btn" >My Projects</button>
     </div>
-    <img id="me-image" src="{{ url_for('static', filename='img/me2.png') }}">
+    <img id="me-image" src="static/img/me2.png">
     </div>
     <div class="scroll-down"></div>
     <div id="about-container">
@@ -46,9 +55,9 @@
     <div id="my-cv" style="display: none;">
          <!-- Modal content -->
          <div id="my-cv-content">
-             <img class="cv-image" src="{{ url_for('static', filename='img/LBuncle_CV_February-25-1.png') }}">
-             <img class="cv-image" src="{{ url_for('static', filename='img/LBuncle_CV_February-25-2.png') }}">
-             <a href="{{ url_for('static', filename='pdfs/LBuncle_CV_February-25.pdf') }}" download="{{ url_for('static', filename='pdfs/LBuncle_CV_February-25.pdf') }}">
+             <img class="cv-image" src="static/img/LBuncle_CV_February-25-1.png">
+             <img class="cv-image" src="static/img/LBuncle_CV_February-25-2.png">
+             <a href="static/pdfs/LBuncle_CV_February-25.pdf" download="static/pdfs/LBuncle_CV_February-25.pdf">
                 <button>Download CV</button>
             </a>
             <div class="line"></div>
@@ -58,7 +67,7 @@
     <h1 id="projects-heading">Projects</h1>
     <div id="projects-container">
         <div class="project-container">
-            <img class="project-image" src="{{ url_for('static', filename='img/defensive_midfielders_data_project.png') }}">
+            <img class="project-image" src="static/img/defensive_midfielders_data_project.png">
             <div class="project-summary">
                 <h1 class="project-heading">Defensive midfielders analysis</h1>
                 <p class="about">
