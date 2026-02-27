@@ -283,6 +283,9 @@ body {
 
 .formula {
     -webkit-tap-highlight-color: transparent;
+}
+
+.formula:focus {
     outline: none;
 }
 
