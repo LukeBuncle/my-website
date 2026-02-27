@@ -285,8 +285,9 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.formula:focus {
-    outline: none;
+.MJX-TEX, 
+.MathJax {
+    outline: none !important;
 }
 
 @keyframes scrollIn {
