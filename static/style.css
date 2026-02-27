@@ -290,6 +290,10 @@ body {
     outline: none !important;
 }
 
+.results-image {
+    max-width: 95%;
+}
+
 @keyframes scrollIn {
     0% {
         transform: translateY(-100%); /* Start below the screen */
@@ -305,6 +309,7 @@ body {
         background-color: #000135;
         color: white;
         padding: 10px 20px;
+        margin: 10%;
         border: none;
         border-radius: 2px;
         font-size: 1rem;
