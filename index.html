@@ -315,7 +315,9 @@
 
         projectBtn.onclick = function () {
             projectDialog.showModal()
-            projectDialog.scrollTop = 0;
+            requestAnimationFrame(() => {
+                projectDialog.scrollTop = 0;
+            });;
         };
 
         // When the user clicks anywhere outside of the modal, close it

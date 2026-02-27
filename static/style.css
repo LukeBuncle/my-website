@@ -274,9 +274,15 @@ body {
 
 .project-details {
     max-width: min(90%, 70vh);
+    border-top: none;
+    border-bottom: none;
     padding-left: 2%;
     padding-right: 2%;
     overflow-y: auto;
+}
+
+.formula {
+    -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes scrollIn {
