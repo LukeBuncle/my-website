@@ -13,6 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -91,9 +92,204 @@
     </div>
 
     <dialog id="project-details" class="project-details">
-        <h1 class="project-heading">Defensive midfielders analysis</h1>
+        <h1 class="project-details-heading">Defensive Midfielders Analysis</h1>
         <p class="about">
-                    Project details...
+                    <h1 class="project-heading">Introduction</h1>
+                    The purpose of this project is to rank a selection of professional football players, specifically midfielders, based on how effective they could be as signings for the defensive midfielder role. To better understand the long-term value each player could offer, longevity and potential for further development will be taken into account on top of current ability.
+                    <br><br>
+                    The project was developed in Python, using the following libraries:
+                    <br>
+                    <ul>
+                    <li>Pandas</li>
+                    <li>Plotly</li>
+                    <li>Scikit-learn</li>
+                    </ul>
+                    
+
+                    <h1 class="project-heading">Data</h1>
+                    All data for this project was sourced from SofaScore and reflects each player’s domestic league performance during the 2024/25 season, with the following exceptions:
+                    <br>
+                    <ul>
+                    <li>Richard Rios’ data was taken from the 2024 season from the Brazilian top flight. This is due to the Brazilian league starting and finishing in the same calendar year.</li>
+                    <br>
+                    <li>Rodri’s data was taken from the 23/24 season due to a significant injury keeping him on the sidelines for the majority of the 24/25 campaign.</li>
+                    </ul>
+                    The metrics selected for this project were chosen to reflect the key responsibilities of a defensive midfielder. Each metric was assigned a weighting based on its relative importance to the role. The selected metrics and their corresponding weightings are outlined below:
+                    
+                    <br>
+                    <br>
+                    <table border="1" cellspacing="0">
+                    <tr>
+                        <th><h1 class="project-subsection-heading">Metric</h1></th>
+                        <th><h1 class="project-subsection-heading">Weighting</h1></th>
+                    </tr>
+                    <tr>
+                        <td>Balls recovered per game</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Key passes per 90</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Passing accuracy (%)</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Duels won (%)</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Total duels won per game</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Interceptions per 90</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Tackles per 90</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Aerial duels won per 90 (%)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Long pass accuracy (%)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Minutes played (League)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Successful dribbles per 90 (%)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Successful dribbles per 90</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Aerial duels won per 90</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Yellow cards</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>Red cards</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>Cards per 90*</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>Errors leading to goal or shot</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>Errors leading to goal or shot per 90</td>
+                        <td>-5</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>-5</td>
+                    </tr>
+                    </table>
+                    *Calculated manually by taking the total number of yellow and red cards, dividing by ‘minutes played’ and multiplying by 90
+
+                    <br><br>
+                    <h1 class="project-subsection-heading">Metric Selection Methodology</h1>
+                    The metrics were selected to showcase multiple elements of player performance, with an emphasis on defensive output, possession regain, aerial effectiveness, availability, ball progression, attacking contribution, and error frequency. A significant portion of metrics selected were on a per-90 basis to control for differences in playing time and enable comparability across players.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">1. Defensive & Possession Regain Metrics</h1>
+                    ‘Interceptions per 90’, ‘tackles per 90’, ‘balls recovered per game’, ‘total duels won per game’, and ‘duel won (%)’ were selected to quantify defensive activity and efficiency in regaining possession. These variables collectively capture both volume (engagement frequency) and effectiveness (success rates) in defensive actions.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">2. Aerial Performance</h1>
+                    ‘Aerial duels won per 90’ and ‘aerial duels won per 90 (%)’ were included to isolate aerial contribution. This accounts for a player’s impact in contesting crosses, long balls, and set pieces in both defensive and attacking phases.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">3. Availability & Disciplinary Profile</h1>
+                    ‘Minutes played (League)’, ‘yellow cards’, ‘red cards’, and ‘cards per 90’ were incorporated as indicators of durability, selection consistency, and disciplinary risk. Minutes played serves as a proxy for coach trust and fitness reliability, while card metrics contextualise behavioural risk.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">4. Ball Progression & Creative Output</h1>
+                    ‘Key passes per 90’, ‘passing accuracy (%)’, ‘long pass accuracy (%)’, ‘successful dribbles per 90’, and ‘successful dribbles per 90 (%)’ were chosen to evaluate on-ball contribution. These metrics measure a player’s role in ball retention, progression through passing or carrying, and chance creation.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">5. Error Frequency & Negative Impact</h1>
+                    ‘Errors leading to a shot or goal’ (total and per 90) were included to account for mistakes that could cause losses. Incorporating both raw totals and per 90 metrics ensures visibility of risk independent of playing time.
+                    <br><br>
+                    <h1 class="project-subsubsection-heading">6. Age as a Development Variable</h1>
+                    ‘Age’ was incorporated as a contextual variable to approximate career phase, potential for further development, and projected longevity. While not a performance metric, it provides enormous value when assessing long-term contribution.
+
+                    <br><br>
+
+                    <h1 class="project-heading">Method</h1>
+                    <h1 class="project-subsection-heading">1. Data Preparation</h1>
+                    First, the data was converted to the appropriate data types within Python (e.g., numeric variables stored as integers or floats rather than strings). Percentage-based fields were cleaned by removing the % symbol and converting them to floating-point format to enable numerical computation.
+                    <h1 class="project-subsection-heading">2. Feature Structuring & Clustering</h1>
+                    To help identify what types of players perform the best, I implemented an unsupervised clustering approach using the K-means algorithm from scikit-learn. Players were grouped according to similarity across selected metrics, with most available performance metrics being considered. However, certain variables were excluded to avoid redundancy or distortion:
+                    <ul>
+                        <li>‘Long pass accuracy (%)’ – Overall passing accuracy (%) was retained as a sufficiently representative measure of passing proficiency for this context.</li>
+                        <br>
+                        <li>‘Minutes played (league)’ – Excluded as it reflects opportunity rather than underlying ability or player profile.</li>
+                        <br>
+                        <li>‘Yellow cards’ and ‘Red cards’ – The consolidated cards-per-90 metric was used to capture disciplinary records without duplication.</li>
+                        <br>
+                        <li>‘Errors leading to goal or shot’ – Omitted due to sensitivity to total minutes played.</li>
+                        <br>
+                        <li>‘Age’ – Removed as the objective was to cluster based purely on player characteristics rather than demographic attributes.</li>
+                    </ul>
+                    <h1 class="project-subsection-heading">3. Exploratory Visualization</h1>
+                    Given the demands of the role, regaining possession and retaining the ball were identified as the most important attributes. Accordingly, ‘balls recovered per game’ was selected as a measure of defensive output, and ‘passing accuracy (%)’ as an indicator of distribution reliability.
+                    <br><br>
+                    A scatter plot was used to compare these metrics, enabling identification of players who perform strongly in both metrics, as well as those whose profiles lean more heavily toward either defensive recovery or ball retention.
+                    <br><br>
+                    The results of this analysis are discussed in the Results and Conclusion section.
+                    <h1 class="project-subsection-heading">4. Normalisation & Weighted Scoring Model</h1>
+                    All performance metrics were normalised to ensure comparability across differing scales and distributions. Each variable was then multiplied by a predefined weight reflecting its relative importance for the role.
+                    <br><br>
+                    For each player, a total score was calculated as the sum of their weighted attributes:
+                    <br><br>
+                    <p class="fomrula">$$Score_p = \sum_{m=1}^{n} \left( w_m \times x_{pm} \right)$$</p>
+                    <br><br>
+                    where:
+                    <br><br>
+                    <ul>
+                    <li>\( x_{pm} \) represents the normalised value of metric \( m \) for player \( p \).</li>
+                    <li>\( w_{m} \) represents the assigned weight for metric \( m \)</li>
+                    </ul>
+                    <br><br>
+                    Players were then ranked according to their total score, with higher values indicating stronger overall performance under the defined set of weightings.
+                    <br><br>
+                    <h1 class="project-heading">Results and Conclusion</h1>
+                    The scatter plot comparing ‘balls recovered per game’ against ‘passing accuracy (%)’ identified Rodri as the clear standout profile, combining elite ball-winning output with exceptional distribution reliability. Andre also performed strongly across both metrics, emerging as the next most impressive performer across the two metrics.
+                    <br><br>
+                    These findings were reinforced in the final weighted rankings. Rodri ranked 1st overall, separated from the rest of the field by a significant margin. Moises Caicedo placed 2nd, before a further drop-off to the remaining players, led by Andre in 3rd. The scoring model therefore not only identified the top performer, but also showed a clear separation at the top end of the rankings.
+                    <br><br>
+                    Cluster analysis provided additional context to these results.
+                    <br><br>
+                    <b>Group 1 (22 players)</b> performed weakest overall. Only two players placed inside the top 10 — Dani Ceballos (5th) and Aurelien Tchouameni (8th) — with two further players finishing inside the top 20: Aleksandar Pavlovic (17th) and Manu Kone (19th).
+                    <br><br>
+                    <b>Group 2 (17 players)</b> produced the strongest overall outcomes. Seven of the top 10 ranked players belonged to this cluster, including all of the top four: Rodri (1st), Caicedo (2nd), Andre (3rd), and Morten Hjulmand (4th). Only two Group 2 players ranked outside the top 25 — Alan Varela (32nd) and Joao Palhinha (42nd). Overall, this cluster demonstrated the strongest alignment with the weighted attributes defined in the model.
+                    <br><br>
+                    <b>Group 3 (8 players)</b> delivered more mixed results, broadly closer to Group 1 than Group 2 in aggregate performance. Four players placed inside the top 20: Angelo Stiller (7th), Vitinha (11th), Ederson (13th), and Hakan Calhanoglu (15th). However, interpretation should account for cluster size, as Groups 1 and 2 each contained more than double the number of players in Group 3.
+                    <br><br>
+                    As for what distinguishes the clusters, the scatter plot suggests that ball-winning ability is the primary differentiator. There is clear separation between the groups on the’ balls recovered per game’ metric, with Group 2 demonstrating the strongest output and Group 1 the weakest. However, further analysis would be required to confirm this conclusively.
+                    <br><br>
+                    Overall, the model successfully differentiated player profiles and highlighted a cluster whose stylistic characteristics most closely aligned with the defined requirements of the defensive midfield role.
+                    <h1 class="project-heading">Reflection/Future Improvement</h1>
+                    While the framework provides a structured method for comparing players within the defensive midfield role, several areas could be strengthened.
+                    <br><br>
+                    Firstly, the ranking model is subjective, as both the selection of metrics and the weightings assigned to them were based on my own judgement of which metrics are most important for the role. A more objective approach could involve deriving weightings based on how they influence win rate or points per game. However, this would require consideration of tactical context, as a team’s play style influences how individuals contribute.
+                    <br><br>
+                    Secondly, there should be further statistical breakdown of specific skills such as chance creation from deeper areas, progressive actions under pressure, recovery-to-retention sequences, and press resistance to provide a more functionally complete evaluation.
+                    <br><br>
+                    Finally, a more detailed analysis of each cluster would help identify the key performance metrics that separate the groups. This would provide greater clarity on the shared characteristics within each cluster, outline the different player profiles that naturally emerge from the data, and explain why certain groups achieve stronger results under the model.
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
         </p>
     </dialog>
     </div>
@@ -119,6 +315,7 @@
 
         projectBtn.onclick = function () {
             projectDialog.showModal()
+            projectDialog.scrollTop = 0;
         };
 
         // When the user clicks anywhere outside of the modal, close it
